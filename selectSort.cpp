@@ -3,6 +3,14 @@
 
 using namespace std;
 
+/*
+select sort is a updated version for bubble sort and it is based on swap too
+O(n*n)
+1. iterate the whole array from the first one
+2. then iterate the sub-array from the second one
+3. find the minimun value in the sub-array and store its index
+4. After the second nested iteration, swap the current value with the minimum value we found 
+*/
 void selectSort(vector<int>& arr) {
 	int temp;
 	for (int i = 0; i < arr.size(); ++i) {
