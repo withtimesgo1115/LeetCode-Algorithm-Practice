@@ -2,7 +2,7 @@
 // the first one is called time stamp and the second one is timer
 
 // time stamp
-/*
+
 var throttle = function(func, delay){
     var prev = Date.now();
     return function(){
@@ -44,7 +44,7 @@ function handle2(){
 }
 
 window.addEventListener('scroll',throttle2(handle2,1000));
-*/
+
 
 // Advanced version: time stamp + timer
 var throttle3 = function(func,delay){
