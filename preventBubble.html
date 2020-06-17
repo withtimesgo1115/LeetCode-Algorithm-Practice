@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>取消冒泡</title>
+</head>
+<body>
+    <div id="info">
+      <div class="box-1" onclick="box1()">
+        最外层
+        <div class="box-2" onclick="box2()">
+          第二层
+          <div class="box-3" onclick="box3()">
+            第三层
+            <div class="box-4" onclick="bubbles()">最底</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    // cancel event bubble !
+    // there are two ways to finish this goal according to different browser
+    function bubbles(e){
+        // catch the event according to different browser
+        var ev = e || window.event;
+        // Apart from IE, use ev.stopPropagation()
+        if(ev && ev.stopPropagation){
+            ev.stopPropagation();
+        }else{
+            // IE browser, use ev.cancelBubble = true
+            ev.cancelBubble = true;
+        }
+        console.log("最底层盒子被点击了")
+    }
+
+    function box1(){
+    console.log("最外层盒子被点击了");
+    }
+
+    function box2(){
+    console.log("第二个盒子被点击了");
+    }
+
+    function box3(){
+    console.log("第三个盒子被点击了");
+    }
+    </script>
+
+</body>
+</html>    
