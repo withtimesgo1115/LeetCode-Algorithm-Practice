@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>阻止默认事件</title>
+</head>
+<body>
+<div id="info">
+  <a href="https://www.baidu.com" id="test">阻止默认事件</a>
+</div>
+
+<script>
+    // if we don't use preventDefault function, the link will make sense
+    // now the link cannot make sense anymore
+    var aDom = document.getElementById('test');
+    aDom.onclick = function ( e ){
+        if(e && e.preventDefault) {
+        //非IE浏览器
+        e.preventDefault();
+        } else {
+        //IE浏览器(IE11以下)
+        window.event.returnValue = false;
+        }
+        //return false;   //或者不写上面的判断直接写这句
+    };
+</script>
+</body>
+</html>
