@@ -4,6 +4,7 @@ function downHeap(low, high){
     let i = low, j = i * 2 + 1;
     // if j is smaller than the upper limit, do comparing and swapping again and again
     while(j <= high){
+        // downward should consider two children but upward should not consider that because there is only one parent node
         // if right child is larger than left child, 
         if(j + 1 <= high && heap[j+1] > heap[j]){
             j = j + 1;
