@@ -1,8 +1,30 @@
 """
-Array Flatten
+数组扁平化 (Array Flatten)
 
-Flatten a nested list of arbitrary depth into a single flat list.
-Multiple approaches are provided.
+题目描述：
+    将一个任意深度的嵌套列表展开为一个单层扁平列表。
+    本文件提供了多种实现方式。
+
+示例：
+    输入：[1, [2, [3, 4]], [5, 6]]
+    输出：[1, 2, 3, 4, 5, 6]
+
+    输入：[1, [2, 3], [[4, [5]], 6], 7]
+    输出：[1, 2, 3, 4, 5, 6, 7]
+
+实现方式：
+    1. flatten_reduce - 递归展开法：遍历列表元素，若元素为列表则递归展开，
+       否则直接添加到结果列表。时间复杂度 O(n)，空间复杂度 O(d)，
+       其中 n 为元素总数，d 为最大嵌套深度（递归栈深度）。
+
+    2. flatten_to_string - 字符串转换法：将列表转为字符串后去除方括号，
+       再按逗号分割并转换回整数。时间复杂度 O(n)，空间复杂度 O(n)。
+
+    3. flatten_join - 字符串拼接法：将所有元素转为字符串后用逗号连接，
+       再按逗号分割并解析为整数。时间复杂度 O(n)，空间复杂度 O(n)。
+
+    4. flatten_recursion - 递归展开法：与 flatten_reduce 思路相同，
+       使用递归处理嵌套列表。时间复杂度 O(n)，空间复杂度 O(d)。
 """
 
 

@@ -1,8 +1,35 @@
 """
-Nim Game.
-Two players take turns removing 1 to 3 stones from a pile.
-The player who removes the last stone wins. You go first.
-Determine whether you can win given n stones, assuming optimal play.
+LeetCode 292. Nim 游戏
+
+题目描述：
+    你和你的朋友一起玩 Nim 游戏：
+        - 桌子上有一堆石头。
+        - 你们轮流进行自己的回合，你作为先手。
+        - 每一回合，轮到的人可以拿掉 1 到 3 块石头。
+        - 将最后一块石头拿走的人获胜。
+
+    假设你们都采取最优策略，编写一个函数来判断你是否可以在给定石头数量 n 的情况下赢得游戏。
+    如果可以赢，返回 True；否则返回 False。
+
+示例 1：
+    输入：n = 4
+    输出：False
+    解释：无论你怎么拿，对手都能拿走最后一块石头。
+
+示例 2：
+    输入：n = 1
+    输出：True
+
+示例 3：
+    输入：n = 2
+    输出：True
+
+提示：
+    1 <= n <= 2^31 - 1
+
+解题思路：
+    当 n 是 4 的倍数时，无论你先拿 1、2 还是 3 块，对手都能拿回使得剩余石头仍为 4 的倍数，
+    最终你必输。反之，只要 n 不是 4 的倍数，你总可以先拿若干块使剩余变为 4 的倍数，从而获胜。
 """
 
 

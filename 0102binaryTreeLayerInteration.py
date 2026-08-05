@@ -1,8 +1,26 @@
 """
-Binary Tree Level Order Traversal (LeetCode 102).
+LeetCode 102. 二叉树的层序遍历
 
-Given the root of a binary tree, return the level order traversal
-of its nodes' values (i.e., from left to right, level by level).
+给你二叉树的根节点 root，返回其节点值的层序遍历（即逐层地，从左到右访问所有节点）。
+
+每一层的节点值应当作为一个单独的列表返回，最终结果是一个二维列表，
+其中第 i 个列表包含二叉树第 i 层所有节点的值。
+
+示例 1：
+    输入：root = [3,9,20,null,null,15,7]
+    输出：[[3],[9,20],[15,7]]
+
+示例 2：
+    输入：root = [1]
+    输出：[[1]]
+
+示例 3：
+    输入：root = []
+    输出：[]
+
+提示：
+    树中节点数目在范围 [0, 2000] 内
+    -1000 <= Node.val <= 1000
 """
 
 from collections import deque

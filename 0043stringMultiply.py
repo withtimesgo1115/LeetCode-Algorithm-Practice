@@ -1,8 +1,21 @@
 """
-Multiply Strings (LeetCode 43)
+43. 字符串相乘
 
-Given two non-negative integers represented as strings, return their product
-also as a string.
+给定两个以字符串形式表示的非负整数 num1 和 num2，返回它们的乘积，它们的乘积也表示为字符串形式。
+注意：不能使用任何内置的 BigInteger 库，或者直接将输入转换为整数来处理。
+
+示例 1：
+输入：num1 = "2", num2 = "3"
+输出："6"
+
+示例 2：
+输入：num1 = "123", num2 = "456"
+输出："56088"
+
+提示：
+- 1 <= num1.length, num2.length <= 200
+- num1 和 num2 仅由数字组成
+- num1 和 num2 都不含任何前导零，除了数字 0 本身
 """
 
 
