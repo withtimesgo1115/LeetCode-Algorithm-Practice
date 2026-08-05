@@ -1,9 +1,21 @@
 """
-Remove All Duplicates from Sorted Linked List (LeetCode 82)
+82. 删除排序链表中的重复元素 II
 
-Given the head of a sorted linked list, delete all nodes that have duplicate numbers,
-leaving only distinct numbers from the original list. Return the linked list sorted as well.
-Uses a dummy node to ensure all nodes have a precursor.
+给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。
+返回 已排序的链表 。
+
+示例 1：
+输入：head = [1,2,3,3,4,4,5]
+输出：[1,2,5]
+
+示例 2：
+输入：head = [1,1,1,2,3]
+输出：[2,3]
+
+提示：
+- 链表中节点数目可能满足 0 <= 节点数 <= 300
+- -100 <= Node.val <= 100
+- 链表已经按升序排列
 """
 
 

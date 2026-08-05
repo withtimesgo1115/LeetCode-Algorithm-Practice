@@ -1,11 +1,36 @@
 """
-Largest Human Island (LeetCode 827)
+LeetCode 827. 最大人工岛 (Making A Large Island)
 
-In a 2D grid, 0 represents water and 1 represents land. You can change at most
-one 0 to 1. What is the largest island area after the change?
-(Two cells connected vertically or horizontally form an island.)
+题目描述：
+    给你一个大小为 n x n 的二进制矩阵 grid。最多只能将一格 0 变成 1。
+    返回执行此操作后，grid 中最大的岛屿面积是多少？
+    岛屿由一组上、下、左、右四个方向相连的 1 形成。
 
-Example: grid = [[1,0],[0,1]] -> 3
+示例 1：
+    输入：grid = [[1,0],[0,1]]
+    输出：3
+    解释：将一格 0 变成 1，岛屿面积变为 3。
+
+示例 2：
+    输入：grid = [[1,1],[1,0]]
+    输出：4
+    解释：将右下角的 0 变成 1，整个矩阵变为一个面积为 4 的岛屿。
+
+示例 3：
+    输入：grid = [[1,1],[1,1]]
+    输出：4
+    解释：没有 0 可以变成 1，岛屿面积已经是 4。
+
+约束条件：
+    - n == grid.length == grid[i].length
+    - 1 <= n <= 500
+    - grid[i][j] 为 0 或 1
+
+解题思路：
+    1. 首先用 DFS 遍历所有岛屿，给每个岛屿标记不同的编号，并记录每个岛屿的面积。
+    2. 然后遍历所有海洋格子（值为 0 的格子），尝试将其变为陆地，
+       检查其上下左右四个方向连接的岛屿编号，将不同岛屿的面积相加（加 1 代表自身），
+       取最大值即为答案。
 """
 
 
