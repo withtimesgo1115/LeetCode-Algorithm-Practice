@@ -31,30 +31,25 @@ class ListNode:
         self.next = next
 
 
-def remove_nth_from_end(head: ListNode, n: int) -> ListNode:
-    """
-    Two-pointer (fast/slow) approach - O(L) time, O(1) space.
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # 定义一个头结点，方便删除操作
+        dummy = ListNode(0)
+        dummy.next = head
+        p = dummy # 定义一个指针p，指向头结点
+        q = dummy  # 定义一个指针q，指向头结点
 
-    Use a dummy node. Move the fast pointer n steps ahead, then move
-    both fast and slow together until fast reaches the last node.
-    The slow pointer will then be just before the node to remove.
-    """
-    dummy = ListNode()
-    dummy.next = head
+        # 让q指针先走n+1步，这样p和q之间就有n个节点的间隔
+        for _ in range(n + 1):
+            q = q.next
+        # 让p和q同时走，直到q走到链表的末尾，这样p就指向了倒数第n个节点的前一个节点
+        while q:
+            p = p.next
+            q = q.next
+        # 删除倒数第n个节点
+        p.next = p.next.next
+        # 返回链表的头结点
+        return dummy.next
+            
 
-    fast = dummy
-    slow = dummy
-
-    # Advance fast pointer by n steps
-    for _ in range(n):
-        fast = fast.next
-
-    # Move both pointers until fast reaches the last node
-    while fast.next:
-        fast = fast.next
-        slow = slow.next
-
-    # Remove the nth node from the end
-    slow.next = slow.next.next
-
-    return dummy.next
+        
