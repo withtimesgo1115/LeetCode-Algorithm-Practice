@@ -1,30 +1,30 @@
 """
-141. 环形链表（Linked List Cycle）
+141. 环形链表(Linked List Cycle)
 
-给你一个链表的头节点 head，判断链表中是否有环。
+给你一个链表的头节点 head,判断链表中是否有环。
 
-如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。
-为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾端连接到链表
-中的位置（索引从 0 开始）。如果 pos 是 -1，则在该链表中没有环。
+如果链表中有某个节点,可以通过连续跟踪 next 指针再次到达,则链表中存在环。
+为了表示给定链表中的环,评测系统内部使用整数 pos 来表示链表尾端连接到链表
+中的位置(索引从 0 开始)。如果 pos 是 -1,则在该链表中没有环。
 
-如果链表中存在环，则返回 true；否则，返回 false。
+如果链表中存在环,则返回 true;否则,返回 false。
 
-示例 1：
-    输入：head = [3,2,0,-4], pos = 1
-    输出：true
-    解释：链表中有一个环，其尾部连接到第二个节点。
+示例 1:
+    输入:head = [3,2,0,-4], pos = 1
+    输出:true
+    解释:链表中有一个环,其尾部连接到第二个节点。
 
-示例 2：
-    输入：head = [1,2], pos = 0
-    输出：true
-    解释：链表中有一个环，其尾部连接到第一个节点。
+示例 2:
+    输入:head = [1,2], pos = 0
+    输出:true
+    解释:链表中有一个环,其尾部连接到第一个节点。
 
-示例 3：
-    输入：head = [1], pos = -1
-    输出：false
-    解释：链表中没有环。
+示例 3:
+    输入:head = [1], pos = -1
+    输出:false
+    解释:链表中没有环。
 
-提示：
+提示:
     链表中节点的数目范围是 [0, 10^4]
     -10^5 <= Node.val <= 10^5
     pos 为 -1 或者链表中的一个有效索引
@@ -36,13 +36,31 @@ class ListNode:
         self.val = val
         self.next = next
 
+'''
+原理是
+设链表共有 a+b 个节点,其中 链表头部到链表入口 有 a 个节点(不计链表入口节点), 链表环 有 b 个节点(这里需要注意,a 和 b 是未知数,例如图解上链表 a=4 , b=5);设两指针分别走了 f,s 步,则有:
 
-def hasCycle(head):
-    """Return True if the linked list has a cycle, False otherwise."""
-    while head:
-        if head.flag:
-            return True
-        else:
-            head.flag = True
-            head = head.next
-    return False
+fast 走的步数是 slow 步数的 2 倍,即 f=2s;(解析: fast 每轮走 2 步)
+fast 比 slow 多走了 n 个环的长度,即 f=s+nb;( 解析: 双指针都走过 a 步,然后在环内绕圈直到重合,重合时 fast 比 slow 多走 环的长度整数倍 )。
+将以上两式相减得到 f=2nb,s=nb,即 fast 和 slow 指针分别走了 2n,n 个环的周长。
+
+如果让指针从链表头部一直向前走并统计步数k,那么所有 走到链表入口节点时的步数 是:k=a+nb ,即先走 a 步到入口节点,之后每绕 1 圈环( b 步)都会再次到入口节点。而目前 slow 指针走了 nb 步。因此,我们只要想办法让 slow 再走 a 步停下来,就可以到环的入口。
+
+但是我们不知道 a 的值,该怎么办？依然是使用双指针法。考虑构建一个指针,此指针需要有以下性质:此指针和 slow 一起向前走 a 步后,两者在入口节点重合。那么从哪里走到入口节点需要 a 步？答案是链表头节点head。
+
+双指针第二次相遇:
+令 fast 重新指向链表头部节点。此时 f=0,s=nb 。
+slow 和 fast 同时每轮向前走 1 步。
+当 fast 指针走到 f=a 步时,slow 指针走到 s=a+nb 步。此时两指针重合,并同时指向链表环入口,返回 slow 指向的节点即可。
+'''
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head # 定义慢指针,初始指向链表头节点
+        fast = head # 定义快指针,初始指向链表头节点
+        # 当快指针不为空时,继续循环
+        while fast and fast.next: # 当快指针不为空且快指针的下一个节点不为空时,继续循环
+            fast = fast.next.next # 快指针每次移动两步
+            slow = slow.next # 慢指针每次移动一步
+            if fast == slow: # 如果快慢指针相遇,说明链表有环
+                return True
+        return False # 如果快指针走到链表末尾,说明链表无环

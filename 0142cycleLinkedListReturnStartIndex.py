@@ -39,12 +39,23 @@ class ListNode:
         self.next = next
 
 
-def detectCycle(head):
-    """Return the node where the cycle begins, or None if there is no cycle."""
-    while head:
-        if head.flag:
-            return head
-        else:
-            head.flag = True
-            head = head.next
-    return None
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # 定义快慢指针，初始都指向链表头节点
+        fast, slow = head, head
+        while True: # 无限循环，直到快慢指针相遇或链表无环
+            if not (fast and fast.next): 
+                return # 如果快指针为空或快指针的下一个节点为空，说明链表无环，返回 None
+            # 快指针每次移动两步，慢指针每次移动一步
+            fast, slow = fast.next.next, slow.next
+            if fast == slow:  # 如果快慢指针相遇，说明链表有环，跳出循环
+                break
+        # 当快慢指针相遇时，将快指针重新指向链表头节点，慢指针保持在相遇点
+        fast = head
+        # 快慢指针每次都移动一步，直到再次相遇，相遇点即为环的入口节点
+        while fast != slow:
+            fast, slow = fast.next, slow.next
+        # 返回环的入口节点
+        return slow
+        
+        
