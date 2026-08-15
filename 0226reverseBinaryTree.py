@@ -31,14 +31,11 @@ class TreeNode:
         self.left = left
         self.right = right
 
-
-def invert_tree(root):
-    if not root:
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
         return root
-
-    right = invert_tree(root.right)
-    left = invert_tree(root.left)
-    root.left = right
-    root.right = left
-
-    return root
