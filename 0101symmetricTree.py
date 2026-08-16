@@ -37,13 +37,18 @@ class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if not root:
             return True
+        # 定义一个递归函数，判断两个子树是否对称
         def dfs(left, right):
+            # 如果两个子树都为空，则对称
             if left is None and right is None:
                 return True
+            # 如果其中一个子树为空，则不对称
             if left is None or right is None:
                 return False
+            # 如果两个子树的根节点值不相等，则不对称
             if left.val != right.val:
                 return False
+            # 递归判断左子树的左子树和右子树的右子树是否对称
             return dfs(left.left, right.right) and dfs(left.right, right.left)
 
         return dfs(root.left, root.right)
