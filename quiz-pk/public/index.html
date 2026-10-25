@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>知识PK</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Home Screen -->
+    <div id="screen-home" class="screen active">
+      <div class="home-container">
+        <h1 class="game-title">知识PK</h1>
+        <p class="subtitle">实时对战知识问答</p>
+        <div id="user-rank-display" class="user-rank-display hidden">
+          <span class="rank-icon" id="home-rank-icon"></span>
+          <span class="rank-name" id="home-rank-name"></span>
+          <span class="rank-stats" id="home-rank-stats"></span>
+        </div>
+        <div class="nickname-input-group">
+          <input type="text" id="nickname-input" placeholder="输入你的昵称" maxlength="8">
+          <button id="btn-enter" class="btn btn-primary">进入</button>
+        </div>
+        <div id="category-grid" class="category-grid"></div>
+        <div class="home-footer">
+          <button id="btn-single-player" class="btn btn-accent">单人练习</button>
+          <button id="btn-leaderboard" class="btn btn-secondary">排行榜</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Matching Screen -->
+    <div id="screen-matching" class="screen">
+      <div class="matching-container">
+        <div class="matching-animation">
+          <div class="pulse-ring"></div>
+          <div class="matching-icon">&#9876;</div>
+        </div>
+        <h2>正在匹配对手...</h2>
+        <p id="matching-category" class="matching-text"></p>
+        <div class="matching-players">
+          <div class="matching-player">
+            <div class="avatar" id="matching-avatar-me"></div>
+            <span id="matching-name-me"></span>
+            <span class="rank-badge-small" id="matching-rank-me"></span>
+          </div>
+          <span class="vs-text">VS</span>
+          <div class="matching-player">
+            <div class="avatar matching-opponent" id="matching-avatar-opponent">?</div>
+            <span id="matching-name-opponent">等待中...</span>
+            <span class="rank-badge-small" id="matching-rank-opponent"></span>
+          </div>
+        </div>
+        <button id="btn-cancel-match" class="btn btn-outline">取消匹配</button>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="screen-game" class="screen">
+      <div class="game-header">
+        <div class="player-score player-left">
+          <div class="avatar-small" id="game-avatar-me"></div>
+          <div class="score-info">
+            <span class="player-name" id="game-name-me"></span>
+            <span class="rank-badge-tiny" id="game-rank-me"></span>
+            <span class="score-value" id="game-score-me">0</span>
+          </div>
+        </div>
+        <div class="game-center">
+          <div class="question-counter" id="question-counter">1/5</div>
+          <div id="double-score-badge" class="double-score-badge hidden">双倍题!</div>
+          <div class="timer-container">
+            <svg class="timer-svg" viewBox="0 0 100 100">
+              <circle class="timer-bg" cx="50" cy="50" r="45"/>
+              <circle class="timer-fg" id="timer-circle" cx="50" cy="50" r="45"/>
+            </svg>
+            <span class="timer-text" id="timer-text">15</span>
+          </div>
+        </div>
+        <div class="player-score player-right">
+          <div class="score-info score-info-right">
+            <span class="player-name" id="game-name-opponent"></span>
+            <span class="rank-badge-tiny" id="game-rank-opponent"></span>
+            <span class="score-value" id="game-score-opponent">0</span>
+          </div>
+          <div class="avatar-small" id="game-avatar-opponent"></div>
+        </div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-me">
+          <span class="progress-label">我</span>
+        </div>
+        <div class="progress-bar" id="progress-opponent">
+          <span class="progress-label">对手</span>
+        </div>
+      </div>
+
+      <div class="question-container">
+        <div class="question-card">
+          <span class="question-category-tag" id="question-category-tag"></span>
+          <h3 id="question-text" class="question-text"></h3>
+        </div>
+        <div id="options-container" class="options-container"></div>
+      </div>
+
+      <div id="answer-result-overlay" class="answer-result-overlay hidden">
+        <div class="result-icon" id="result-icon"></div>
+        <div class="result-score" id="result-score"></div>
+        <div class="result-double" id="result-double"></div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="screen-result" class="screen">
+      <div class="result-container">
+        <div id="confetti-container" class="confetti-container"></div>
+        <div class="result-main">
+          <div class="result-badge" id="result-badge"></div>
+          <h2 id="result-title" class="result-title"></h2>
+        </div>
+        <div class="result-scores">
+          <div class="result-player">
+            <div class="avatar" id="result-avatar-me"></div>
+            <span id="result-name-me"></span>
+            <span class="rank-badge-small" id="result-rank-me"></span>
+            <span class="final-score" id="result-score-me">0</span>
+          </div>
+          <span class="result-vs">:</span>
+          <div class="result-player">
+            <div class="avatar" id="result-avatar-opponent"></div>
+            <span id="result-name-opponent"></span>
+            <span class="rank-badge-small" id="result-rank-opponent"></span>
+            <span class="final-score" id="result-score-opponent">0</span>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button id="btn-play-again" class="btn btn-primary">再来一局</button>
+          <button id="btn-back-home" class="btn btn-secondary">返回首页</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="modal-leaderboard" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>排行榜</h3>
+          <button id="btn-close-leaderboard" class="btn-close">&times;</button>
+        </div>
+        <div id="leaderboard-list" class="leaderboard-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/socket.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
