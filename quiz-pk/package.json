@@ -13,6 +13,6 @@
     "socket.io": "^4.7.5",
     "better-sqlite3": "^11.3.0",
     "cookie-parser": "^1.4.6",
-    "uuid": "^10.0.0"
+    "uuid": "^14.0.0"
   }
 }
