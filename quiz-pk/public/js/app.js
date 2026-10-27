@@ -1,6 +1,6 @@
 const GameState = { HOME: 'home', MATCHING: 'matching', PLAYING: 'playing', RESULT: 'result' };
 
-const CATEGORY_ICONS = { '文学艺术': '📚', '法律': '⚖️', '历史地理': '🌍', '物理化学生物': '🔬', '科技创新': '💡', '成语辨析': '✍️' };
+const CATEGORY_ICONS = { '文学艺术': '📚', '法律': '⚖️', '历史地理': '🌍', '物理化学生物': '🔬', '科技创新': '💡', '成语辨析': '✍️', '时事政治': '📰' };
 const CATEGORY_GRADIENTS = [
   'linear-gradient(135deg, #667eea, #764ba2)',
   'linear-gradient(135deg, #f093fb, #f5576c)',
@@ -59,7 +59,6 @@ class App {
       return '<div class="category-card disabled" data-category="' + this._esc(cat.category) + '" style="background:' + grad + '20;border-color:' + grad + '40">'
         + '<div class="category-icon">' + icon + '</div>'
         + '<div class="category-name">' + this._esc(cat.category) + '</div>'
-        + '<div style="font-size:12px;color:var(--text-secondary);margin-top:4px">' + cat.count + ' 题</div>'
         + '</div>';
     }).join('');
 
