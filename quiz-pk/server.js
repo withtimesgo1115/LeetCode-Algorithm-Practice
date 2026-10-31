@@ -22,7 +22,7 @@ initializeDatabase();
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('frontend/dist'));
 
 const server = http.createServer(app);
 const io = new Server(server, {
