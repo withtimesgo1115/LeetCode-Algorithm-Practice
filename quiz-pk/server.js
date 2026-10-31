@@ -76,28 +76,41 @@ function addToQueue(socketId, userId, nickname, category, mode) {
   const player = { socketId, userId, nickname, timer, mode };
   queue.push(player);
 
-  // Single player mode: spawn bot after 3 seconds if no human found
+  // First, try to match with any available human player
+  if (queue.length >= 2) {
+    // Find players available for human matching (pvp mode, or single mode without botTimer fired yet)
+    const availableHumans = queue.filter(p => {
+      if (p.mode === 'pvp') return true;
+      // Single mode players can still be matched with humans if their bot hasn't spawned yet
+      if (p.mode === 'single' && !p.botSpawned) return true;
+      return false;
+    });
+    
+    if (availableHumans.length >= 2) {
+      const p1 = availableHumans[0];
+      const p2 = availableHumans[1];
+      queue.splice(queue.indexOf(p1), 1);
+      queue.splice(queue.indexOf(p2), 1);
+      clearTimeout(p1.timer);
+      clearTimeout(p2.timer);
+      if (p1.botTimer) clearTimeout(p1.botTimer);
+      if (p2.botTimer) clearTimeout(p2.botTimer);
+      createGame(p1, p2, category);
+      return; // Match found, exit early
+    }
+  }
+
+  // No human match found, if single mode then schedule bot spawn
   if (mode === 'single') {
     player.botTimer = setTimeout(() => {
       const idx = queue.findIndex(p => p.socketId === socketId);
       if (idx !== -1) {
         queue.splice(idx, 1);
         clearTimeout(timer);
+        player.botSpawned = true;
         spawnBot(player, category);
       }
     }, 3000);
-  } else if (queue.length >= 2) {
-    // Find two human players
-    const humans = queue.filter(p => p.mode !== 'single' || !p.botTimer);
-    if (humans.length >= 2) {
-      const p1 = humans[0];
-      const p2 = humans[1];
-      queue.splice(queue.indexOf(p1), 1);
-      queue.splice(queue.indexOf(p2), 1);
-      clearTimeout(p1.timer);
-      clearTimeout(p2.timer);
-      createGame(p1, p2, category);
-    }
   }
 
   if (queue.length < 2 || mode === 'single') {
@@ -382,8 +395,10 @@ function finishGame(roomId) {
 
 // ── Socket.IO ──────────────────────────────────────────────────────
 io.on('connection', (socket) => {
+  console.log('[SOCKET] New connection:', socket.id);
 
   socket.on('join', (data) => {
+    console.log('[JOIN]', data.nickname, 'userId:', data.userId);
     const nickname = (data.nickname || '').trim().slice(0, 8);
     if (!nickname) return socket.emit('auth_error', { message: '昵称不能为空' });
 
@@ -396,18 +411,24 @@ io.on('connection', (socket) => {
     const user = findOrCreateUser(userId, nickname);
     const rank = getRank(user.games_played, user.games_won);
     connectedUsers.set(socket.id, { userId, nickname });
+    console.log('[JOINED]', nickname, 'socket:', socket.id);
     socket.emit('auth_success', { userId, nickname, rank });
   });
 
   socket.on('select_category', (data) => {
+    console.log('[SELECT_CATEGORY]', data.category, 'mode:', data.mode, 'socket:', socket.id);
     const user = connectedUsers.get(socket.id);
-    if (!user) return;
+    if (!user) {
+      console.log('[ERROR] User not found in connectedUsers for socket:', socket.id);
+      return;
+    }
 
     const categories = getCategories().map(c => c.category);
     if (data.category !== RANDOM_CATEGORY && !categories.includes(data.category)) return;
 
     removeFromQueue(socket.id);
     addToQueue(socket.id, user.userId, user.nickname, data.category, data.mode || 'pvp');
+    console.log('[QUEUE] Added to queue, mode:', data.mode);
   });
 
   socket.on('cancel_match', () => {
