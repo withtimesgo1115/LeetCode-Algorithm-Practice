@@ -5,18 +5,42 @@ import { GAME_EVENTS } from '@/utils/constants'
 
 let socket = null
 const listeners = new Map()
+let pendingJoin = null // Store join params to send after connection
 
 export function useSocket() {
   const userStore = useUserStore()
   const gameStore = useGameStore()
 
   function connect() {
-    if (socket?.connected) return
+    if (socket?.connected) {
+      console.log('[SOCKET] Already connected')
+      return
+    }
+    console.log('[SOCKET] Connecting...')
     socket = io({ withCredentials: true })
+
+    socket.on('connect', () => {
+      console.log('[SOCKET] Connected:', socket.id)
+      // Send pending join if exists
+      if (pendingJoin) {
+        console.log('[SOCKET] Sending pending join:', pendingJoin)
+        socket.emit(GAME_EVENTS.JOIN, pendingJoin)
+        pendingJoin = null
+      }
+    })
+
+    socket.on('disconnect', () => {
+      console.log('[SOCKET] Disconnected')
+    })
+
+    socket.on('connect_error', (error) => {
+      console.error('[SOCKET] Connection error:', error)
+    })
 
     const events = Object.values(GAME_EVENTS)
     events.forEach(ev => {
       socket.on(ev, (data) => {
+        console.log('[SOCKET] Received:', ev, data)
         dispatch(ev, data)
         listeners.get(ev)?.forEach(cb => cb(data))
       })
@@ -86,10 +110,19 @@ export function useSocket() {
   }
 
   function join(nickname, userId) {
-    socket?.emit(GAME_EVENTS.JOIN, { nickname, userId })
+    console.log('[SOCKET] Emitting join:', nickname, userId)
+    const joinData = { nickname, userId }
+    if (socket?.connected) {
+      socket.emit(GAME_EVENTS.JOIN, joinData)
+    } else {
+      // Store as pending to send after connection
+      pendingJoin = joinData
+      console.log('[SOCKET] Join queued (not connected yet)')
+    }
   }
 
   function selectCategory(category, mode) {
+    console.log('[SOCKET] Emitting select_category:', category, mode)
     socket?.emit(GAME_EVENTS.SELECT_CATEGORY, { category, mode })
   }
 
