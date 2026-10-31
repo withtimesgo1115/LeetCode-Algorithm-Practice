@@ -1,18 +1,18 @@
 /* TDesign Mobile theme overrides */
 :root {
   --td-brand-color: #667eea;
-  --td-brand-color-light: rgba(102, 126, 234, 0.1);
+  --td-brand-color-light: rgba(102, 126, 234, 0.15);
   --td-bg-color-page: #1a1a2e;
-  --td-bg-color-container: rgba(255, 255, 255, 0.08);
-  --td-bg-color-secondarycontainer: rgba(255, 255, 255, 0.12);
+  --td-bg-color-container: rgba(255, 255, 255, 0.12);
+  --td-bg-color-secondarycontainer: rgba(255, 255, 255, 0.18);
   --td-text-color-primary: #ffffff;
-  --td-text-color-secondary: rgba(255, 255, 255, 0.65);
-  --td-text-color-placeholder: rgba(255, 255, 255, 0.4);
-  --td-border-color: rgba(255, 255, 255, 0.15);
+  --td-text-color-secondary: rgba(255, 255, 255, 0.75);
+  --td-text-color-placeholder: rgba(255, 255, 255, 0.5);
+  --td-border-color: rgba(255, 255, 255, 0.25);
   --td-error-color: #ff5252;
   --td-success-color: #00e676;
   --td-warning-color: #ffd740;
-  --td-radius-default: 10px;
+  --td-radius-default: 12px;
   --td-radius-large: 16px;
 }
 

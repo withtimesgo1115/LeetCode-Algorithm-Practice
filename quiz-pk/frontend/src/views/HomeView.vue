@@ -131,15 +131,17 @@ function selectCategory(category) {
   width: 100%;
 }
 .game-title {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 800;
   text-align: center;
   margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
 .subtitle {
   text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 24px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 32px;
+  font-size: 16px;
 }
 .user-rank-display {
   display: flex;
@@ -166,16 +168,26 @@ function selectCategory(category) {
 }
 .nickname-input-group :deep(.t-input) {
   flex: 1;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
   color: #fff;
+  font-size: 16px;
+}
+.nickname-input-group :deep(.t-input) input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.nickname-input-group :deep(.t-button) {
+  min-width: 80px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
 }
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 .random-mode {
   grid-column: 1 / -1;
@@ -183,8 +195,12 @@ function selectCategory(category) {
 .home-footer {
   display: flex;
   gap: 12px;
+  margin-top: 8px;
 }
 .home-footer :deep(.t-button) {
   flex: 1;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 500;
 }
 </style>
