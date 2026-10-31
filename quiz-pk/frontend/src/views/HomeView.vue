@@ -19,7 +19,7 @@
         />
         <t-button
           theme="primary"
-          :disabled="!!userStore.nickname"
+          :disabled="!nickname.trim() || !!userStore.nickname"
           @click="enterNickname"
         >
           进入
@@ -48,13 +48,14 @@
 
       <div class="home-footer">
         <t-button
-          :theme="singleMode ? 'primary' : 'default'"
+          :theme="singleMode ? 'primary' : 'warning'"
+          variant="outline"
           @click="singleMode = !singleMode"
         >
           {{ singleMode ? '单人模式 ✓' : '单人练习' }}
         </t-button>
-        <t-button theme="default" @click="leaderboardStore.show()">
-          排行榜
+        <t-button theme="success" variant="outline" @click="leaderboardStore.show()">
+          🏆 排行榜
         </t-button>
       </div>
     </div>
@@ -148,18 +149,20 @@ function selectCategory(category) {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  padding: 10px 20px;
+  background: rgba(102, 126, 234, 0.2);
+  border: 2px solid rgba(102, 126, 234, 0.5);
+  border-radius: 24px;
   margin: 0 auto 24px;
   width: fit-content;
 }
 .rank-icon {
-  font-size: 20px;
+  font-size: 22px;
 }
 .rank-name {
-  font-size: 14px;
+  font-size: 15px;
   color: #fff;
+  font-weight: 600;
 }
 .nickname-input-group {
   display: flex;
@@ -173,15 +176,28 @@ function selectCategory(category) {
   border-radius: 12px;
   color: #fff;
   font-size: 16px;
+  padding: 0 16px;
+}
+.nickname-input-group :deep(.t-input) input {
+  color: #fff;
 }
 .nickname-input-group :deep(.t-input) input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
+}
+.nickname-input-group :deep(.t-input--disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 .nickname-input-group :deep(.t-button) {
   min-width: 80px;
   height: 48px;
   font-size: 16px;
   font-weight: 600;
+}
+.nickname-input-group :deep(.t-button--disabled) {
+  background: rgba(102, 126, 234, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: rgba(255, 255, 255, 0.5);
 }
 .category-grid {
   display: grid;
@@ -201,6 +217,16 @@ function selectCategory(category) {
   flex: 1;
   height: 48px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
+}
+.home-footer :deep(.t-button--theme-warning) {
+  background: rgba(255, 215, 64, 0.15);
+  border-color: rgba(255, 215, 64, 0.5);
+  color: #ffd740;
+}
+.home-footer :deep(.t-button--theme-success) {
+  background: rgba(0, 230, 118, 0.15);
+  border-color: rgba(0, 230, 118, 0.5);
+  color: #00e676;
 }
 </style>
